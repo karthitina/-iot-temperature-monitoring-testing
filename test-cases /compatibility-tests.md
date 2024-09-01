@@ -20,7 +20,7 @@ platforms.
 1. The system should transmit data correctly and consistently across all tested protocols.
 2. There should be no significant data loss, delays, or errors regardless of the protocol used.
 3. The system should maintain the same level of accuracy and performance with each protocol.
-## test case 3 :Verify sensor 
+
 
 
 
