@@ -1,6 +1,6 @@
 # Test Result 2: Verify temperature reading accuracy
 - **Tested on:** 2024-08-30
-- **Result:** Fail
+- **Result:** Fail 
 - **Details:**
  - Reference Temperature: 25°C
  - Sensor Reading: 15.5°C
