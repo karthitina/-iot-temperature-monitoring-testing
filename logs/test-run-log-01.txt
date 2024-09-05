@@ -1,1 +1,38 @@
+[30/08/2024 10:00:01] WiFi connected
+[30/08/2024 10:00:01] IP address: 192.168.1.5
+[30/08/2024 10:00:01] Connecting to AWS IoT...
+[30/08/2024 10:00:03] AWS IoT connected
+
+[30/08/2024 10:00:10] Reading sensor data...
+[30/08/2024 10:00:10] Temperature: 25.5°C, Humidity: 40.0%
+[30/08/2024 10:00:10] Published data: {"temperature": 25.50, "humidity": 40.00}
+
+[30/08/2024 10:00:20] Reading sensor data...
+[30/08/2024 10:00:20] Temperature: 30.2°C, Humidity: 39.5%
+[30/08/2024 10:00:20] Published data: {"temperature": 30.20, "humidity": 39.50}
+
+[30/08/2024 10:00:30] Reading sensor data...
+[30/08/2024 10:00:30] Temperature: 35.0°C, Humidity: 39.0%
+[30/08/2024 10:00:30] Published data: {"temperature": 35.00, "humidity": 39.00}
+
+[30/08/2024 10:00:40] Reading sensor data...
+[30/08/2024 10:00:40] Temperature: 40.3°C, Humidity: 38.8%
+[30/08/2024 10:00:40] Published data: {"temperature": 40.30, "humidity": 38.80}
+
+[30/08/2024 10:00:50] Reading sensor data...
+[30/08/2024 10:00:50] Temperature: 45.1°C, Humidity: 38.5%
+[30/08/2024 10:00:50] Published data: {"temperature": 45.10, "humidity": 38.50}
+
+[30/08/2024 10:01:00] Reading sensor data...
+[30/08/2024 10:01:00] Temperature: 50.2°C, Humidity: 38.2%
+[30/08/2024 10:01:00] Alert! Temperature exceeded maximum threshold.
+[30/08/2024 10:01:00] Published alert: Alert! Temperature exceeded maximum threshold.
+
+[30/08/2024 10:01:10] Reading sensor data...
+[30/08/2024 10:01:10] Temperature: 49.8°C, Humidity: 38.1%
+[30/08/2024 10:01:10] Published data: {"temperature": 49.80, "humidity": 38.10}
+
+[30/08/2024 10:01:20] Reading sensor data...
+[30/08/2024 10:01:20] Temperature: 50.5°C, Humidity: 38.0%
+
 
