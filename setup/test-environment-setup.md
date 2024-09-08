@@ -62,6 +62,5 @@ d. Save and Share:
 Summary
 1.	Configure AWS IoT Rule: Set up a rule to direct data to DynamoDB or S3.
 2.	Set Up Grafana: Integrate AWS CloudWatch with Grafana or use plugins to connect directly with DynamoDB/S3.
-3.	Visualize Data: Create dashboards in Grafana to visualize and analyze the temperature data.
+3. Visualize Data: Create dashboards in Grafana to visualize and analyze the temperature data.
 By following these steps, you'll be able to collect, store, and visualize IoT data effectively using AWS and Grafana.
-
