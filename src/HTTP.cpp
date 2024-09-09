@@ -3,14 +3,14 @@
 #include <DHT.h>
 
 // Wi-Fi credentials
-const char* ssid = "HomeNetwork";             // Your Wi-Fi network name
-const char* password = "SuperSecret123";      // Your Wi-Fi network password
+const char* ssid = "HomeNetwork";
+const char* password = "SuperSecret123";
 
-// AWS IoT HTTP endpoint
-// Replace with the actual AWS IoT endpoint for your region. Example format:
-// "https://<your-endpoint>.iot.<region>.amazonaws.com"
-// You can find this in your AWS IoT Core console under "Settings"
-const char* serverName = "https://a3k7odshaiiot-ats.iot.us-east-1.amazonaws.com/temperature";
+// AWS IoT HTTP endpoint (Use a real endpoint)
+const char* serverName = "https://iot.us-east-1.amazonaws.com/temperature";
+
+// HTTP Bearer Token (real-like token)
+const char* bearer_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
 // Initialize DHT sensor
 #define DHTPIN 4
@@ -36,29 +36,30 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-// Function to send data to the cloud using HTTP POST
+// Function to send data to the cloud using HTTP POST with Bearer Token Authentication
 void sendTemperatureData(float temperature, float humidity) {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverName); // AWS IoT HTTP endpoint
-    
-    // Add required headers (if any specific to your AWS IoT setup)
+    http.begin(serverName);  // AWS IoT HTTP endpoint
+
+    // Add headers
     http.addHeader("Content-Type", "application/json");
-    
+    http.addHeader("Authorization", "Bearer " + String(bearer_token));  // Bearer Token Authentication
+
     // Create JSON payload
     String httpRequestData = "{\"temperature\": " + String(temperature, 2) + ", \"humidity\": " + String(humidity, 2) + "}";
-    
+
     // Send HTTP POST request
     int httpResponseCode = http.POST(httpRequestData);
-    
+
     if (httpResponseCode > 0) {
-      String response = http.getString(); // Get the response to the request
+      String response = http.getString();  // Get the response to the request
       Serial.println("HTTP Response code: " + String(httpResponseCode));
       Serial.println("Response: " + response);
     } else {
       Serial.println("Error on sending POST: " + String(httpResponseCode));
     }
-    
+
     // Free resources
     http.end();
   } else {
@@ -72,4 +73,18 @@ void setup() {
   setup_wifi();
 }
 
-void
+void loop() {
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  sendTemperatureData(temperature, humidity);
+  delay(60000);  // Send data every 60 seconds
+}
+
+
+
