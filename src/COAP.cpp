@@ -3,11 +3,14 @@
 #include <DHT.h>
 
 // Wi-Fi credentials
-const char* ssid = "HomeNetwork";             // Your Wi-Fi network SSID
-const char* password = "SuperSecret123";      // Your Wi-Fi password
+const char* ssid = "HomeNetwork";
+const char* password = "SuperSecret123";
 
-// CoAP server address (example format with IP or domain)
-const char* coap_server = "coap://coap.my-iot-cloud.com:5683/temperature";  // Example CoAP server address with port
+// CoAP server address (example with port)
+const char* coap_server = "coap://coap.my-iot-cloud.com:5683/temperature";
+
+// Pre-shared key (PSK) for CoAP authentication (real-like value)
+const char* psk_key = "JskD9lLm90LpPskYrT4562qVqB8a";
 
 // Initialize DHT sensor
 #define DHTPIN 4
@@ -37,21 +40,24 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-// Function to send temperature data via CoAP
+// Function to send temperature data via CoAP with Pre-Shared Key (PSK)
 void sendTemperatureData(float temperature, float humidity) {
   String payload = "{\"temperature\": " + String(temperature, 2) + ", \"humidity\": " + String(humidity, 2) + "}";
 
   Serial.print("Sending data to CoAP server: ");
   Serial.println(payload);
 
-  coap.put(coap_server, payload.c_str());
+  // Add PSK to the payload for authentication
+  String authenticatedPayload = "{\"psk\": \"" + String(psk_key) + "\", \"data\": " + payload + "}";
+  
+  coap.put(coap_server, authenticatedPayload.c_str());
 }
 
 void setup() {
   Serial.begin(115200);
   dht.begin();
   setup_wifi();
-
+  
   coap.start();
 }
 
@@ -65,7 +71,9 @@ void loop() {
   }
 
   sendTemperatureData(temperature, humidity);
-  delay(60000); // Send data every 60 seconds
+  delay(60000);  // Send data every 60 seconds
 }
+
+
 
   
