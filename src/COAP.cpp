@@ -3,11 +3,11 @@
 #include <DHT.h>
 
 // Wi-Fi credentials
-const char* ssid = "HomeNetwork";
-const char* password = "SuperSecret123";
+const char* ssid = "HomeNetwork";             // Your Wi-Fi network SSID
+const char* password = "SuperSecret123";      // Your Wi-Fi password
 
-// CoAP server address (use your own)
-const char* coap_server = "coap://your-coap-server-address.com";
+// CoAP server address (example format with IP or domain)
+const char* coap_server = "coap://coap.my-iot-cloud.com:5683/temperature";  // Example CoAP server address with port
 
 // Initialize DHT sensor
 #define DHTPIN 4
@@ -40,7 +40,7 @@ void setup_wifi() {
 // Function to send temperature data via CoAP
 void sendTemperatureData(float temperature, float humidity) {
   String payload = "{\"temperature\": " + String(temperature, 2) + ", \"humidity\": " + String(humidity, 2) + "}";
-  
+
   Serial.print("Sending data to CoAP server: ");
   Serial.println(payload);
 
@@ -51,7 +51,7 @@ void setup() {
   Serial.begin(115200);
   dht.begin();
   setup_wifi();
-  
+
   coap.start();
 }
 
@@ -67,3 +67,5 @@ void loop() {
   sendTemperatureData(temperature, humidity);
   delay(60000); // Send data every 60 seconds
 }
+
+  
