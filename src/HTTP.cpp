@@ -1,0 +1,78 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <DHT.h>
+
+// Wi-Fi credentials
+const char* ssid = "HomeNetwork";
+const char* password = "SuperSecret123";
+
+// AWS IoT HTTP endpoint (Use the correct AWS IoT endpoint)
+const char* serverName = "https://your-aws-iot-endpoint.amazonaws.com/temperature";
+
+// Initialize DHT sensor
+#define DHTPIN 4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// Function to connect to Wi-Fi
+void setup_wifi() {
+  delay(10);
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+// Function to send data to the cloud using HTTP POST
+void sendTemperatureData(float temperature, float humidity) {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin(serverName); // AWS IoT HTTP endpoint
+    
+    http.addHeader("Content-Type", "application/json");
+    String httpRequestData = "{\"temperature\": " + String(temperature, 2) + ", \"humidity\": " + String(humidity, 2) + "}";
+
+    int httpResponseCode = http.POST(httpRequestData);
+    
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println("HTTP Response code: " + String(httpResponseCode));
+      Serial.println("Response: " + response);
+    } else {
+      Serial.println("Error on sending POST: " + String(httpResponseCode));
+    }
+    
+    http.end();
+  } else {
+    Serial.println("WiFi not connected");
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+  setup_wifi();
+}
+
+void loop() {
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  sendTemperatureData(temperature, humidity);
+  delay(60000); // Send data every 60 seconds
+}
