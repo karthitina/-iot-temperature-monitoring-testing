@@ -38,8 +38,8 @@ WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
 // Define thresholds for temperature alerts
-const float MAX_TEMP_THRESHOLD = 50.0;  // Maximum temperature threshold in Celsius
-const float MIN_TEMP_THRESHOLD = -30.0; // Minimum temperature threshold in Celsius
+const float MAX_TEMP_THRESHOLD = 40.0;  // Maximum temperature threshold in Celsius
+const float MIN_TEMP_THRESHOLD = 2.0; // Minimum temperature threshold in Celsius
 
 // Function to connect to Wi-Fi
 void setup_wifi() {
