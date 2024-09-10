@@ -1,4 +1,4 @@
-# Test Result 1: Temperature Reading Accuracy
+# Test Result 1: Verify Temperature Reading Accuracy
 - **Tested on:** 2024-08-30
 - **Result:** Pass
 - **Details:**
