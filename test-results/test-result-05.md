@@ -1,7 +1,7 @@
-# Test Result 4: Validate Alert System for High Temperature
+# Test Result 5: Validate Alert System for High Temperature
 - **Tested on:** 2024-09-10
 - **Result:** Pass
 - **Details:**
-- Reference Temperature: 50°C
-Sensor Reading: 50.2°C
-Deviation: ± 0.1°C
+ - Reference Temperature: 50°C
+ - Sensor Reading: 50.2°C
+ - Deviation: ± 0.1°C
