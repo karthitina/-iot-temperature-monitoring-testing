@@ -10,7 +10,7 @@ const char* password = "SuperSecret123";
 const char* coap_server = "coap://coap.my-iot-cloud.com:5683/temperature";
 
 // Pre-shared key (PSK) for CoAP authentication (real-like value)
-const char* psk_key = "JskD9lLm90LpPskYrT4562qVqB8a";
+const char* psk_key = "JskD9lLm90LpPskYrxxxT4562qVqB8a";
 
 // Initialize DHT sensor
 #define DHTPIN 4
