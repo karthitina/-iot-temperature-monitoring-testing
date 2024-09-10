@@ -17,6 +17,10 @@ const char* bearer_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
+// Define thresholds for temperature alerts
+const float MAX_TEMP_THRESHOLD = 40.0;  // Maximum temperature threshold in Celsius
+const float MIN_TEMP_THRESHOLD = 2.0; // Minimum temperature threshold in Celsius
+
 // Function to connect to Wi-Fi
 void setup_wifi() {
   delay(10);
@@ -67,24 +71,38 @@ void sendTemperatureData(float temperature, float humidity) {
   }
 }
 
+// Function to send alerts via HTTP POST
+void sendAlert(String message) {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("https://iot.us-east-1.amazonaws.com/alerts");  // AWS IoT HTTP alert endpoint
+
+    // Add headers
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("Authorization", "Bearer " + String(bearer_token));  // Bearer Token Authentication
+
+    // Create JSON payload
+    String httpRequestData = "{\"alert\": \"" + message + "\"}";
+
+    // Send HTTP POST request
+    int httpResponseCode = http.POST(httpRequestData);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();  // Get the response to the request
+      Serial.println("HTTP Response code: " + String(httpResponseCode));
+      Serial.println("Response: " + response);
+    } else {
+      Serial.println("Error on sending alert: " + String(httpResponseCode));
+    }
+
+    // Free resources
+    http.end();
+  } else {
+    Serial.println("WiFi not connected");
+  }
+}
+
 void setup() {
   Serial.begin(115200);
-  dht.begin();
-  setup_wifi();
-}
-
-void loop() {
-  float temperature = dht.readTemperature();
-  float humidity = dht.readHumidity();
-
-  if (isnan(temperature) || isnan(humidity)) {
-    Serial.println("Failed to read from DHT sensor!");
-    return;
-  }
-
-  sendTemperatureData(temperature, humidity);
-  delay(60000);  // Send data every 60 seconds
-}
-
-
+  dht.begin
 
