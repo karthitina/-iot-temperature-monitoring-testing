@@ -2,6 +2,6 @@
 - **Tested on:** 2024-09-10
 - **Result:** Pass
 - **Details:**
- - Reference Temperature: 100°C
- - Sensor Reading: 99.8°C
- - Deviation: ± 0.2°C
+ - Reference Temperature: 50°C
+ - Sensor Reading: 49.9°C
+ - Deviation: ± 0.1°C
