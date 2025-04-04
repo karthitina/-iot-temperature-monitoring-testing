@@ -1,4 +1,4 @@
-# Boundary Test Cases - IoT Temperature Monitoring Syste
+# Boundary Test Cases - IoT Temperature Monitoring Systems
 ## Test Case 1: Test Maximum Temperature
 - **Objective:** Test the system's performance at the maximum supported
 temperature.
