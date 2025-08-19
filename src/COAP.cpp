@@ -96,3 +96,5 @@ void loop() {
   sendTemperatureData(temperature, humidity);
   delay(60000);  // Send data every 60 seconds
 }
+
+
