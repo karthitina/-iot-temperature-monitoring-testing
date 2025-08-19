@@ -105,5 +105,7 @@ void sendAlert(String message) {
 void setup() {
   Serial.begin(115200);
   dht.begin
+    
 
   
+
